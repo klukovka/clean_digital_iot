@@ -103,7 +103,7 @@ class _CleanDigitalApiClient implements CleanDigitalApiClient {
   }
 
   @override
-  Future<Event> getEvent(eventId) async {
+  Future<Event?> getEvent(eventId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -114,7 +114,7 @@ class _CleanDigitalApiClient implements CleanDigitalApiClient {
                 .compose(_dio.options, '/event/by-id/$eventId',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Event.fromJson(_result.data!);
+    final value = _result.data == null ? null : Event.fromJson(_result.data!);
     return value;
   }
 

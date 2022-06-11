@@ -17,4 +17,8 @@ class CleanDigitalRouter extends BaseRouter {
   Future<void> replaceSetupEventPage() async {
     await replace(const SetupEventRoute());
   }
+
+  Future<void> replaceScanQrPage(String eventId) async {
+    await replace(ScanQrRoute(eventId: eventId));
+  }
 }

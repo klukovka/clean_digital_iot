@@ -76,7 +76,7 @@ class IoTService extends BaseService {
     });
   }
 
-  Future<Event> getEvent(String eventId) async {
+  Future<Event?> getEvent(String eventId) async {
     return await makeErrorHandledCall(() async {
       return await _apiClient.getEvent(eventId);
     });

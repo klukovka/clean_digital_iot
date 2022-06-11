@@ -10,14 +10,15 @@ import 'package:injectable/injectable.dart' as _i2;
 
 import '../api/clean_digital_api_client.dart' as _i9;
 import '../api/interceptors/header_api_interceptor.dart' as _i7;
-import '../bloc/setup_event_page/setup_event_page_cubit.dart' as _i11;
-import '../bloc/setup_iot_page/setup_iot_page_cubit.dart' as _i12;
+import '../bloc/scan_qr_page/scan_qr_page_cubit.dart' as _i11;
+import '../bloc/setup_event_page/setup_event_page_cubit.dart' as _i12;
+import '../bloc/setup_iot_page/setup_iot_page_cubit.dart' as _i13;
 import '../router/app_auto_router.gr.dart' as _i4;
 import '../router/clean_digital_router.dart' as _i3;
 import '../services/iot_service.dart' as _i10;
 import '../services/logout_service.dart' as _i6;
 import '../services/preferences_service.dart' as _i5;
-import 'module/api_module.dart' as _i13; // ignore_for_file: unnecessary_lambdas
+import 'module/api_module.dart' as _i14; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -40,11 +41,13 @@ Future<_i1.GetIt> $configureDependencies(_i1.GetIt get,
       () => apiModule.apiClient(get<_i8.Dio>()));
   gh.factory<_i10.IoTService>(() => _i10.IoTService(
       get<_i9.CleanDigitalApiClient>(), get<_i5.PreferencesService>()));
-  gh.factory<_i11.SetupEventPageCubit>(() => _i11.SetupEventPageCubit(
+  gh.factory<_i11.ScanQrPageCubit>(
+      () => _i11.ScanQrPageCubit(get<_i10.IoTService>()));
+  gh.factory<_i12.SetupEventPageCubit>(() => _i12.SetupEventPageCubit(
       get<_i10.IoTService>(), get<_i5.PreferencesService>()));
-  gh.factory<_i12.SetupIoTPageCubit>(
-      () => _i12.SetupIoTPageCubit(get<_i10.IoTService>()));
+  gh.factory<_i13.SetupIoTPageCubit>(
+      () => _i13.SetupIoTPageCubit(get<_i10.IoTService>()));
   return get;
 }
 
-class _$ApiModule extends _i13.ApiModule {}
+class _$ApiModule extends _i14.ApiModule {}

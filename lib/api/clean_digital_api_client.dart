@@ -58,7 +58,7 @@ abstract class CleanDigitalApiClient {
   );
 
   @GET('/event/by-id/{eventId}')
-  Future<Event> getEvent(
+  Future<Event?> getEvent(
     @Path('eventId') String eventId,
   );
 

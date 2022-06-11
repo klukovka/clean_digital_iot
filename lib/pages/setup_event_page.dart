@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:clean_digital_iot/di/injection_container.dart';
 import 'package:clean_digital_iot/models/additional_mode.dart';
+import 'package:clean_digital_iot/router/clean_digital_router.dart';
 import 'package:clean_digital_iot/views/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -213,6 +214,7 @@ class _SetupEventPageState extends State<SetupEventPage> {
             title: 'Start',
             isLoading: state.status == SetupEventPageStatus.saving,
             onPressed: () {
+              router.replaceScanQrPage('eventId');
               //TODO: Uncomment
               // cubit.save(
               //   mode: _fbValue[_SetupEventFields.mode.name],
