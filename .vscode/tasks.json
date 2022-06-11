@@ -1,0 +1,235 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "CleanDigital: generate metrics",
+            "type": "shell",
+            "command": "flutter",
+            "group": "build",
+            "runOptions": {
+                "instanceLimit": 1,
+                "reevaluateOnRerun": false
+            },
+            "args": [
+                "pub",
+                "run",
+                "dart_code_metrics:metrics",
+                "analyze",
+                "lib",
+                "--reporter=html"
+            ],
+            "presentation": {
+                "echo": true,
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "CleanDigital: generate native splash",
+            "type": "shell",
+            "command": "flutter",
+            "group": "build",
+            "runOptions": {
+                "instanceLimit": 1,
+                "reevaluateOnRerun": false
+            },
+            "args": [
+                "pub",
+                "run",
+                "flutter_native_splash:create"
+            ],
+            "presentation": {
+                "echo": true,
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "CleanDigital: run tests",
+            "type": "shell",
+            "command": "flutter",
+            "group": "build",
+            "runOptions": {
+                "instanceLimit": 1,
+                "reevaluateOnRerun": false
+            },
+            "args": [
+                "test"
+            ],
+            "presentation": {
+                "echo": true,
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "CleanDigital: analyze",
+            "type": "shell",
+            "command": "flutter",
+            "group": "build",
+            "runOptions": {
+                "instanceLimit": 1,
+                "reevaluateOnRerun": false
+            },
+            "args": [
+                "analyze"
+            ],
+            "presentation": {
+                "echo": true,
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "CleanDigital: clean",
+            "type": "shell",
+            "command": "flutter",
+            "group": "build",
+            "runOptions": {
+                "instanceLimit": 1,
+                "reevaluateOnRerun": false
+            },
+            "args": [
+                "clean"
+            ],
+            "presentation": {
+                "echo": true,
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "CleanDigital: dependencies",
+            "type": "shell",
+            "command": "flutter",
+            "group": "build",
+            "runOptions": {
+                "instanceLimit": 1,
+                "reevaluateOnRerun": false
+            },
+            "args": [
+                "pub",
+                "get"
+            ],
+            "presentation": {
+                "echo": true,
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "CleanDigital: build",
+            "type": "shell",
+            "command": "flutter",
+            "group": "build",
+            "runOptions": {
+                "instanceLimit": 1,
+                "reevaluateOnRerun": false
+            },
+            "args": [
+                "pub",
+                "run",
+                "build_runner",
+                "build",
+                "--delete-conflicting-outputs"
+            ],
+            "presentation": {
+                "echo": true,
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "CleanDigital: localize",
+            "type": "shell",
+            "command": "flutter",
+            "group": "build",
+            "options": {
+                "cwd": "${cwd}"
+            },
+            "runOptions": {
+                "instanceLimit": 1,
+                "reevaluateOnRerun": false
+            },
+            "args": [
+                "gen-l10n",
+                "--arb-dir=lib/l10n",
+                "--template-arb-file=clean_digital_uk.arb",
+                "--no-synthetic-package",
+                "--output-dir=lib/l10n",
+                "--output-class=CleanDigitalLocalizations",
+                "--output-localization-file=clean_digital_localizations.dart",
+                "--preferred-supported-locales='en,uk'",
+                "--untranslated-messages-file=lib/l10n/missing_localizations.json"
+            ],
+            "presentation": {
+                "echo": true,
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "CleanDigital: rebuild",
+            "detail": "Clean and Rebuild App",
+            "group": "build",
+            "options": {
+                "cwd": "${cwd}"
+            },
+            "dependsOn": [
+                "CleanDigital: clean",
+                "CleanDigital: dependencies",
+                "CleanDigital: build",
+                "CleanDigital: localize"
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": []
+        },
+        {
+            "label": "CleanDigital: create new launch icons",
+            "type": "shell",
+            "command": "flutter",
+            "group": "build",
+            "runOptions": {
+                "instanceLimit": 1,
+                "reevaluateOnRerun": false
+            },
+            "args": [
+                "pub",
+                "run",
+                "flutter_launcher_icons:main"
+            ],
+            "presentation": {
+                "echo": true,
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+    ]
+}
