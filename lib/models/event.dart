@@ -26,7 +26,7 @@ class Event extends Equatable {
   final int paidBonuses;
   final int paidMoney;
   final bool taken;
-  final int rating;
+  final int? rating;
 
   const Event({
     required this.eventId,

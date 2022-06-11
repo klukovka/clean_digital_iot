@@ -32,9 +32,20 @@ class ScanQrPageCubit extends BaseCubit<ScanQrPageState> {
         return;
       }
       if (event.paidStatus) {
-        emit(state.copyWith(status: ScanQrPageStatus.success));
+        final time = event.mode.time + (event.additionalMode?.time ?? 0);
+        emit(state.copyWith(
+          status: ScanQrPageStatus.success,
+          time: time,
+        ));
         return;
       }
+    });
+  }
+
+  Future<void> cancel(String eventId) async {
+    await makeErrorHandledCall(() async {
+      _ioTService.cancelEvent(eventId);
+      emit(state.copyWith(status: ScanQrPageStatus.deleted));
     });
   }
 }

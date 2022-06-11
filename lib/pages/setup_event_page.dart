@@ -45,7 +45,12 @@ class _SetupEventPageState extends State<SetupEventPage> {
     BuildContext context,
     SetupEventPageState state,
   ) {
-    // TODO: implement listener
+    switch (state.status) {
+      case SetupEventPageStatus.saved:
+        router.replaceScanQrPage(state.eventId);
+        break;
+      default:
+    }
   }
 
   @override
@@ -214,14 +219,12 @@ class _SetupEventPageState extends State<SetupEventPage> {
             title: 'Start',
             isLoading: state.status == SetupEventPageStatus.saving,
             onPressed: () {
-              router.replaceScanQrPage('eventId');
-              //TODO: Uncomment
-              // cubit.save(
-              //   mode: _fbValue[_SetupEventFields.mode.name],
-              //   spinning: _fbValue[_SetupEventFields.spinning.name],
-              //   temperature: _fbValue[_SetupEventFields.temperature.name],
-              //   additionalMode: _fbValue[_SetupEventFields.additionalMode.name],
-              // );
+              cubit.save(
+                mode: _fbValue[_SetupEventFields.mode.name],
+                spinning: _fbValue[_SetupEventFields.spinning.name],
+                temperature: _fbValue[_SetupEventFields.temperature.name],
+                additionalMode: _fbValue[_SetupEventFields.additionalMode.name],
+              );
             },
           ),
         ),

@@ -3,6 +3,7 @@ import 'package:clean_digital_iot/pages/scan_qr_page.dart';
 import 'package:clean_digital_iot/pages/setup_event_page.dart';
 
 import '../pages/setup_iot_page.dart';
+import '../pages/washing_page.dart';
 
 const _durationInMilliseconds = 250;
 const _fadeIn = TransitionsBuilders.fadeIn;
@@ -20,14 +21,18 @@ const _fadeIn = TransitionsBuilders.fadeIn;
     CustomRoute(
       page: SetupEventPage,
       path: '/setup/event',
-      initial: true,
       transitionsBuilder: _fadeIn,
       durationInMilliseconds: _durationInMilliseconds,
     ),
     CustomRoute(
       page: ScanQrPage,
       path: '/setup/event/:eventId',
-      initial: true,
+      transitionsBuilder: _fadeIn,
+      durationInMilliseconds: _durationInMilliseconds,
+    ),
+    CustomRoute(
+      page: WashingPage,
+      path: '/washing',
       transitionsBuilder: _fadeIn,
       durationInMilliseconds: _durationInMilliseconds,
     ),

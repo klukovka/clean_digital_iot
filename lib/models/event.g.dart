@@ -17,7 +17,7 @@ Event _$EventFromJson(Map<String, dynamic> json) => Event(
       paidBonuses: json['paidBonuses'] as int,
       paidMoney: json['paidMoney'] as int,
       taken: json['taken'] as bool,
-      rating: json['rating'] as int,
+      rating: json['rating'] as int?,
       additionalMode: json['additionalMode'] == null
           ? null
           : AdditionalMode.fromJson(

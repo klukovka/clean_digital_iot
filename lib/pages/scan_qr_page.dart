@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:clean_digital_iot/di/injection_container.dart';
 import 'package:clean_digital_iot/router/clean_digital_router.dart';
+import 'package:clean_digital_iot/utils/int_ext.dart';
 import 'package:clean_digital_iot/views/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,10 +37,16 @@ class _ScanQrPageState extends State<ScanQrPage> {
 
   ScanQrPageCubit get cubit => context.read();
 
+  String get _timerLabel {
+    final minutes = _timer ~/ 60;
+    final seconds = _timer - minutes * 60;
+    return '${minutes.timeFormatted}:${seconds.timeFormatted}';
+  }
+
   @override
   void initState() {
     super.initState();
-    _timer = 65;
+    _timer = 900;
     _startTimer();
   }
 
@@ -52,7 +59,7 @@ class _ScanQrPageState extends State<ScanQrPage> {
   void _startTimer() {
     _periodicTimer = Timer.periodic(
       const Duration(seconds: 1),
-      (timer) {
+      (timer) async {
         if (_timer < 1) {
           timer.cancel();
           router.replaceSetupEventPage();
@@ -60,16 +67,29 @@ class _ScanQrPageState extends State<ScanQrPage> {
           setState(() {
             _timer--;
           });
-          cubit.init('eventId');
+          await cubit.init(widget.eventId);
         }
       },
     );
   }
 
-  String get _timerLabel {
-    final minutes = _timer ~/ 60;
-    final seconds = _timer - minutes * 60;
-    return '${minutes.timeFormatted}:${seconds.timeFormatted}';
+  void _onStateChanged(
+    BuildContext context,
+    ScanQrPageState state,
+  ) {
+    switch (state.status) {
+      case ScanQrPageStatus.deleted:
+      case ScanQrPageStatus.error:
+        router.pop();
+        break;
+
+      case ScanQrPageStatus.success:
+        router.replaceWashingPage(state.time);
+        break;
+
+      case ScanQrPageStatus.loading:
+        break;
+    }
   }
 
   @override
@@ -79,20 +99,7 @@ class _ScanQrPageState extends State<ScanQrPage> {
         title: const Text('SCAN QR'),
       ),
       body: BlocListener<ScanQrPageCubit, ScanQrPageState>(
-        listener: (context, state) {
-          switch (state.status) {
-            case ScanQrPageStatus.deleted:
-            case ScanQrPageStatus.error:
-              router.pop();
-              break;
-
-            case ScanQrPageStatus.success:
-              break;
-
-            case ScanQrPageStatus.loading:
-              break;
-          }
-        },
+        listener: _onStateChanged,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -113,17 +120,17 @@ class _ScanQrPageState extends State<ScanQrPage> {
           ),
         ),
       ),
-      bottomSheet: const Padding(
-        padding: EdgeInsets.all(16.0),
+      bottomSheet: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: PrimaryButton(
           title: 'CANCEL',
           isOutlined: true,
+          onPressed: () {
+            cubit.cancel(widget.eventId);
+            router.replaceSetupEventPage();
+          },
         ),
       ),
     );
   }
-}
-
-extension on int {
-  String get timeFormatted => '$this'.padLeft(2, '0');
 }
